@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Pelicula, Categoria, ConfiguracionSitio
+from .models import Pelicula, Categoria, ConfiguracionSitio, ConfiguracionLogin
 
 def get_imagen_fondo():
     config = ConfiguracionSitio.objects.first()
@@ -43,11 +43,19 @@ def signup(request):
             'form': UserCreationForm(),
             'error': 'Passwords do not match'
         })
-
+    
 def login_view(request):
     if request.method == 'GET':
+        try:
+            # Obtén la configuración de fondo del login si existe
+            configuracion_login = ConfiguracionLogin.objects.first()
+            imagen_fondo = configuracion_login.imagen_fondo_login.url if configuracion_login and configuracion_login.imagen_fondo_login else None
+        except ConfiguracionLogin.DoesNotExist:
+            imagen_fondo = None
+
         return render(request, 'login.html', {
-            'form': AuthenticationForm()
+            'form': AuthenticationForm(),
+            'imagen_fondo': imagen_fondo  # Pasa la URL de la imagen de fondo al contexto
         })
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])

@@ -18,6 +18,10 @@ class Pelicula(models.Model):
     
 class ConfiguracionSitio(models.Model):
     imagen_fondo = models.ImageField(upload_to='imagenes_fondo', null=True, blank=True)
-
     def __str__(self):
         return "Configuración del Sitio"
+    
+class ConfiguracionLogin(models.Model):    
+    imagen_fondo_login = models.ImageField(upload_to='imagenes_fondo_login', null=True, blank=True)
+    def __str__(self):
+        return "Configuración del login"
