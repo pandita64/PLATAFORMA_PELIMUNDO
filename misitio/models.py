@@ -25,3 +25,9 @@ class ConfiguracionLogin(models.Model):
     imagen_fondo_login = models.ImageField(upload_to='imagenes_fondo_login', null=True, blank=True)
     def __str__(self):
         return "Configuración del login"
+
+class ConfiguracionRegistro(models.Model):
+    imagen_fondo_registro = models.ImageField(upload_to='fondos_registro/', null=True, blank=True)
+
+    def __str__(self):
+        return "Configuración de Registro"

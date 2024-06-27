@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Pelicula, Categoria, ConfiguracionSitio, ConfiguracionLogin
+from .models import Pelicula, Categoria, ConfiguracionSitio, ConfiguracionLogin,ConfiguracionRegistro
 
 def get_imagen_fondo():
     config = ConfiguracionSitio.objects.first()
@@ -18,31 +18,20 @@ def home(request):
     return render(request, 'pricipal.html', {'peliculas': peliculas, 'imagen_fondo': imagen_fondo})
 
 def signup(request):
-    if request.user.is_authenticated:
-        return redirect('pricipal')
-    if request.method == 'GET':
-        return render(request, 'signup.html', {
-            'form': UserCreationForm()
-        })
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('pricipal')  # Después de registrar, redirige a principal
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(
-                    username=request.POST['username'],
-                    password=request.POST['password1']
-                )
-                user.save()
-                login(request, user)
-                return redirect('pricipal')
-            except IntegrityError:
-                return render(request, 'signup.html', {
-                    'form': UserCreationForm(),
-                    'error': 'User already exists'
-                })
-        return render(request, 'signup.html', {
-            'form': UserCreationForm(),
-            'error': 'Passwords do not match'
-        })
+        form = UserCreationForm()
+    
+    return render(request, 'signup.html', {'form': form})
+
     
 def login_view(request):
     if request.method == 'GET':
