@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie</title>
+</head>
+<body>
+    <div class="navbar">
+        <h1>PELIMUNDO</h1>
+        <ul>
+            <li><a href="principal.html">Inicio</a></li>
+            <li class="dropdown">
+                <a href="#">Películas</a>
+                <div class="dropdown-content">
+                    <a href="botonPeliculas.html?categoria=terror">Terror</a>
+                    <a href="botonPeliculas.html?categoria=series">Series</a>
+                    <a href="botonPeliculas.html?categoria=infantiles">Infantiles</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="movie-detail">
+        <h2 id="movie-title"></h2>
+        <p id="movie-description"></p>
+    </div>
+
+    <script>
+        const searchParams = new URLSearchParams(window.location.search);
+        const title = searchParams.get('title');
+        const desc = searchParams.get('desc');
+
+        document.getElementById('movie-title').textContent = title;
+        document.getElementById('movie-description').textContent = desc;
+    </script>
+</body>
+</html>

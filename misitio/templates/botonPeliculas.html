@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeliMundo</title>
+    <style>
+        /* Estilos CSS para la página */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #fff;
+            background-image: url(img/FONDOjpg.jpg); /* Ruta de tu imagen de fondo */
+            background-size: cover; /* Asegura que la imagen cubra toda la página */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/FONDOjpg.jpg'); /* Ruta de tu imagen de fondo */
+            background-size: cover; /* Asegura que la imagen cubra toda la página */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            opacity: 0.5; /* Ajusta la opacidad de la imagen de fondo */
+            z-index: -1; /* Asegura que la imagen esté detrás del contenido */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #000;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 56px;
+            position: relative;
+            transition: 0.2s ease-in-out;
+            color: rgb(160, 20, 20);
+        }
+
+        .navbar h1:hover {
+            animation: vibrate 0.2s infinite;
+        }
+
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, 2px); }
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            margin-left: 20px;
+        }
+
+        .navbar li {
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 150px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .search-bar {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 50%;
+            font-size: 16px;
+        }
+
+        .movie-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .movie {
+            background-color: #222;
+            margin: 20px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .movie img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .movie h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    </style>
+<body>
+    <div class="navbar">
+        <h1>PELIMUNDO</h1>
+        <ul>
+            <li><a href="pricipal.html">Inicio</a></li>
+            <li class="dropdown">
+                <a href="#">Películas</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showMovies('terror')">Terror</a>
+                    <a href="#" onclick="showMovies('series')">Series</a>
+                    <a href="#" onclick="showMovies('infantiles')">Infantiles</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar película...">
+    </div>
+    <div class="movie-list" id="terror-section">
+        <!-- Películas de terror -->
+        <div class="movie">
+            <img src="img/terrifier1.jpg">
+            <h3>TERRIFIER</h3>
+        </div>
+        <div class="movie">
+            <img src="img/laMonja2.jpg">
+            <h3>LA MONJA</h3>
+        </div>
+        <div class="movie">
+            <img src="img/cronos3jpg.jpg">
+            <h3>CRONOS</h3>
+        </div>
+        <div class="movie">
+            <img src="img/the texas4jpg.jpg">
+            <h3>TEXAS</h3>
+        </div>
+        <div class="movie">
+            <img src="img/eyesofmi5jpg.jpg">
+            <h3>EYES OF MY</h3>
+        </div>
+        <div class="movie">
+            <img src="img/scream6jpg.jpg">
+            <h3>SCREAM</h3>
+        </div>
+        <div class="movie">
+            <img src="img/espinazo7.jpg">
+            <h3>EL ESPINAZO</h3>
+        </div>
+        <div class="movie">
+            <img src="img/nunacdigas su nombre8.jpg">
+            <h3>NUNCA DIGAS SU NOMBRE</h3>
+        </div>
+    </div>
+
+    <div class="movie-list" id="series-section">
+        <!-- Películas de series -->
+        <div class="movie">
+            <img src="img/serieMerlina1.jpg">
+            <h2>MERLINA</h2>
+        </div>
+        <div class="movie">
+            <img src="img/distritosalvaje5.jpg">
+            <h2>DISTRITO SALVAJE</h2>
+        </div>
+        <div class="movie">
+            <img src="img/pablo escobar3.jpg">
+            <h3>PABLO ESCOBAR</h3>
+        </div>
+        <div class="movie">
+            <img src="img/los juegos del hambre6.jpg">
+            <h3>LOS JUEGOS DEL HAMBRE</h3>
+        </div>
+        <div class="movie">
+            <img src="img/la casa de papel2jpg.jpg">
+            <h3>LA CASA DE PAPEL</h3>
+        </div>
+        <div class="movie">
+            <img src="img/serie3jpg.jpg">
+            <h3>BURN DOWN</h3>
+        </div>
+        <div class="movie">
+            <img src="img/serie5.jpg">
+            <h3>OZARK</h3>
+        </div>
+        <div class="movie">
+            <img src="img/serie6jpg.jpg">
+            <h2>LUCIFER</h2>
+        </div>
+        <div class="movie">
+            <img src="img/serie8.jpg">
+            <h3>ELITE</h3>
+        </div>
+        <div class="movie">
+            <img src="img/serie8jpg.jpg">
+            <h3>DARK</h3>
+        </div>
+        <div class="movie">
+            <img src="img/serie9.jpg">
+            <h3>AUTING</h3>
+        </div>
+    </div>
+
+    <div class="movie-list" id="infantiles-section">
+        <!-- Películas infantiles -->
+        <div class="movie">
+            <img src="img/infantil1jpg.jpg">
+            <h3>VALIENTE</h3>
+        </div>
+        <div class="movie">
+            <img src="img/infantil2jpg.jpg">
+            <h3>ZOOTOPIA</h3>
+        </div>
+        <div class="movie">
+            <img src="img/infantil3jpg.jpg">
+            <h3>ELEMENTOS</h3>
+        </div>
+        <div class="movie">
+            <img src="img/infantil5.jpg">
+            <h3>INTENSAMENTE 2</h3>
+        </div>
+        <div class="movie">
+            <img src="img/infantil6jpg.jpg">
+            <h3>TOY STORY</h3>
+        </div>
+        <div class="movie">
+            <img src="img/infantil8.jpg">
+            <h3>BAMBI</h3>
+        </div>
+        <div class="movie">
+            <img src="img/ALVIN Y LAS ARDILLAS.jpg">
+            <h3>ALVIN Y LAS ARDILLAS</h3>
+        </div>
+        <div class="movie">
+            <img src="img/PAUPATROL.jpg">
+            <h3>PAW PATROL</h3>
+        </div>
+        <div class="movie">
+            <img src="img/RATATUILLI jpg.jpg">
+            <h3>RATATOUILLE</h3>
+        </div>
+        <div class="movie">
+            <img src="img/RIO2 INFANTIL.jpg">
+            <h3>RIO 2</h3>
+        </div>
+        <div class="movie">
+            <img src="img/SCUBYDUpg.jpg">
+            <h3>SCUBYDO</h3>
+        </div>
+    </div>
+
+    <script>
+        function showMovies(category) {
+            // Ocultar todas las películas
+            const allMoviesSection = document.getElementById('all-movies-section');
+            document.querySelectorAll('.movie').forEach(movie => {
+                movie.style.display = 'none';
+            });
+
+            // Mostrar las películas correspondientes a la categoría seleccionada
+            if (category === 'terror') {
+                document.querySelectorAll('#terror-section .movie').forEach(movie => {
+                    movie.style.display = 'block';
+                });
+            } else if (category === 'series') {
+                document.querySelectorAll('#series-section .movie').forEach(movie => {
+                    movie.style.display = 'block';
+                });
+            } else if (category === 'infantiles') {
+                document.querySelectorAll('#infantiles-section .movie').forEach(movie => {
+                    movie.style.display = 'block';
+                });
+            }
+        }
+    </script>
+</body>

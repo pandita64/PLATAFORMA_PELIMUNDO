@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeliMundo</title>
+    <style>
+        /* Estilos CSS para la página */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #fff;
+            background-size: cover; /* Asegura que la imagen cubra toda la página */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ imagen_fondo }}'); /* Ruta dinámica de la imagen de fondo */
+            background-size: cover; /* Asegura que la imagen cubra toda la página */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            opacity: 0.5; /* Ajusta la opacidad de la imagen de fondo */
+            z-index: -1; /* Asegura que la imagen esté detrás del contenido */
+        }
+    
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #000;
+        }
+    
+        .navbar h1 {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 56px;
+            position: relative;
+            transition: 0.2s ease-in-out;
+            color: rgb(160, 20, 20);
+        }
+    
+        .navbar h1:hover {
+            animation: vibrate 0.2s infinite;
+        }
+    
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, 2px); }
+        }
+    
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            margin-left: 20px;
+        }
+    
+        .navbar li {
+            margin-left: 20px;
+            position: relative;
+        }
+    
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+    
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 150px;
+            z-index: 1;
+        }
+    
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+        }
+    
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+    
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    
+        .search-bar {
+            margin: 20px;
+            text-align: center;
+        }
+    
+        .search-bar input {
+            padding: 10px;
+            width: 50%;
+            font-size: 16px;
+        }
+    
+        .movie-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    
+        .movie {
+            position: relative; /* Posición relativa para alinear el nombre */
+            background-color: #222;
+            margin: 20px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden; /* Para recortar la imagen si se agranda */
+            transition: transform 0.2s ease-in-out; /* Transición suave del tamaño */
+        }
+    
+        .movie:hover {
+            transform: translateY(-10px); /* Desplaza la película hacia arriba */
+        }
+    
+        .movie img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out; /* Transición para la imagen dentro del contenedor */
+        }
+    
+        .movie:hover img {
+            transform: scale(1.1); /* Escala la imagen al 110% cuando se pasa el cursor */
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="navbar">
+        <h1>PELIMUNDO</h1>
+        <ul>
+            <li><a href="{% url 'pricipal' %}">Inicio</a></li>
+            <li class="dropdown">
+                <a href="#">Películas</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'terror' %}">Terror</a>
+                    <a href="{% url 'series' %}">Series</a>
+                    <a href="{% url 'infantiles' %}">Infantiles</a>
+                </div>
+            </li>
+        </ul>
+        <li><a href="{% url 'cerrar' %}">Cerrar</a></li>
+    </div>
+    <div class="search-bar">
+        <form action="{% url 'buscar_pelicula' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="q" placeholder="Buscar película...">
+        </form>
+    </div>
+
+    {% if msj %}
+        <div class="container">
+            <h1>{{ msj }}</h1>
+        </div>
+    {% endif %}
+
+    <div class="movie-list">
+        {% for pelicula in peliculas %}
+        <div class="movie">
+            <img src="{{ pelicula.imagen.url }}" alt="{{ pelicula.titulo }}">
+            <h3>{{ pelicula.titulo }}</h3>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+
