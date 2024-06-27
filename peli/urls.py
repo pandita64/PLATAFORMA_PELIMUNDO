@@ -29,7 +29,7 @@ urlpatterns = [
     path('series/', views.series, name='series'),
     path('infantiles/', views.infantiles, name='infantiles'),
     path('buscar_pelicula/', views.buscar_pelicula, name='buscar_pelicula'),
-    path('cerrar/', views.cerrar, name='cerrar'),
+    path('', views.cerrar, name='cerrar'),
     path('password_reset/', include('django.contrib.auth.urls')),
     path('misitio/', include('misitio.urls')),
 ]

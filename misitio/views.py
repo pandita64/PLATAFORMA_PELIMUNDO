@@ -5,7 +5,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Pelicula, Categoria, ConfiguracionSitio, ConfiguracionLogin,ConfiguracionRegistro
+from .models import Pelicula, Categoria, ConfiguracionSitio, ConfiguracionLogin
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+
+
 
 def get_imagen_fondo():
     config = ConfiguracionSitio.objects.first()
@@ -108,6 +112,7 @@ def buscar_pelicula(request):
 def cerrar(request):
     logout(request)
     return redirect('login')
+
 
 
 
