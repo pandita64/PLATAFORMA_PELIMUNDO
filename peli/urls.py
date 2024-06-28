@@ -29,10 +29,14 @@ urlpatterns = [
     path('series/', views.series, name='series'),
     path('infantiles/', views.infantiles, name='infantiles'),
     path('buscar_pelicula/', views.buscar_pelicula, name='buscar_pelicula'),
-    path('', views.cerrar, name='cerrar'),
+    path('', views.cerrar, name='cerrar'),  # Corregido para cerrar sesión
     path('password_reset/', include('django.contrib.auth.urls')),
     path('misitio/', include('misitio.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
